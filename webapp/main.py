@@ -50,7 +50,7 @@ class MainHandler(webapp.RequestHandler):
                                          (screengrabs.key(), randomname))
 
 class CleanHandler(webapp.RequestHandler):
-    # TODO: think of it
+    # TODO: TBD
     def get(self):
         q = Screengrabs.all()
         results = q.fetch(100)
