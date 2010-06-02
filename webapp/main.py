@@ -17,6 +17,7 @@
 
 import wsgiref.handlers
 from google.appengine.ext import webapp
+from google.appengine.ext import db
 from models import Screengrabs
 import random
 
