@@ -19,7 +19,7 @@ import wsgiref.handlers
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 from models import Screengrabs
-import random
+import helpers
 
 class MainHandler(webapp.RequestHandler):
     def get(self,imagename):
@@ -38,14 +38,16 @@ class MainHandler(webapp.RequestHandler):
         self.response.out.write('Nothing here yet :)')
 
     def post(self,foobar):
-      #TODO: protect uploads <--> trust b/w clients and servers <--> Oauth, etc
+      #TODO: protect uploads <--> trust b/w clients and servers <--> Oauth,
+      # secret, etc
         imgdata = self.request.get("img")
         screengrabs = Screengrabs()
         screengrabs.imgdata = db.Blob(imgdata)
-        randomname = randomstring()
+        randomname = helpers.shortify() 
         screengrabs.imagename = randomname
         screengrabs.put()
-        self.response.out.write(randomname)
+        self.response.out.write("[ '%s', '%s' ]" % 
+                                         (screengrabs.key(), randomname))
 
 class CleanHandler(webapp.RequestHandler):
     # TODO: think of it
@@ -65,8 +67,6 @@ def main():
     wsgiref.handlers.CGIHandler().run(application)
 
 
-def randomstring():
-    return ''.join(random.sample('abcdefghijklmnopqrstuvwxyz0123456789', 5))
 
 if __name__ == '__main__':
     main()
