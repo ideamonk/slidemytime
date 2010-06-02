@@ -1,14 +1,23 @@
 @font-face { font-family: Lilly ; src: url('/static/fonts/Lilly__.ttf'); } 
 
 a, img { border:none; }
+a:visited { color:blue; }
 body{
   font-size:12px;
   font-family:helvetica, georgia, arial, verdana, serif;
+  background:#e6f5ff;
+  padding:0px; margin-top:5%;
 }
 #wrapper { 
-  width:800px; 
+  width:820px; 
   margin:0px auto; 
   text-align:center;
+  background:#ffffff;
+  -moz-box-shadow:0px 0px 15px #aaa;
+  -webkit-box-shadow:0px 0px 15px #aaa;
+  border-radius:20px;
+  -moz-border-radius:20px;
+  -webskit-border-radius:20px;
 }
 #midarea {
   background: url(/static/images/blueshit.png) bottom center no-repeat;
