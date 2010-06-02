@@ -25,7 +25,7 @@ body{
   padding-bottom:120px;
 }
 .notice, .notice2 {
-  background:#abddf4;
+  /*background:#abddf4;*/
   color:#4444bb;
   text-shadow:1px 1px 1px #fff;
   -moz-border-radius:5px;
