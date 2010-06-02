@@ -1,4 +1,0 @@
-cron:
-- description: weekly cleanup
-  url: /cleaner
-  schedule: every monday 09:00
