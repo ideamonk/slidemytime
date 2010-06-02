@@ -37,6 +37,7 @@ class MainHandler(webapp.RequestHandler):
         self.response.out.write('Nothing here yet :)')
 
     def post(self,foobar):
+      #TODO: protect uploads <--> trust b/w clients and servers <--> Oauth, etc
         imgdata = self.request.get("img")
         screengrabs = Screengrabs()
         screengrabs.imgdata = db.Blob(imgdata)
