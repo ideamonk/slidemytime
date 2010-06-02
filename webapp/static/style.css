@@ -1,6 +1,9 @@
+@font-face { font-family: Lilly ; src: url('/static/fonts/Lilly__.ttf'); } 
+
 a, img { border:none; }
 body{
   font-size:12px;
+  font-family:helvetica, georgia, arial, verdana, serif;
 }
 #wrapper { 
   width:800px; 
@@ -13,11 +16,14 @@ body{
   padding-bottom:120px;
 }
 .notice {
-  background:#c3e8ff;
+  background:#abddf4;
+  color:#4444bb;
+  text-shadow:1px 1px 1px #fff;
   -moz-border-radius:5px;
-  -webkit-border-radius:5px;
-  border-radius:5px;
-  padding:10px 5px;
+  -webkit-border-radius:15px;
+  border-radius:15px;
+  padding:10px 15px;
   width:70%;
   margin:0px auto;
+  font-family:Lilly;
 }
