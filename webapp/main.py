@@ -29,7 +29,7 @@ class MainHandler(webapp.RequestHandler):
                 screengrabs = q.fetch(1)
                 for screengrab in screengrabs:
                     if screengrab.imgdata:
-                        self.response.headers['Content-Type'] = "image/png"
+                        self.response.headers['Content-Type'] = "image/jpeg"
                         self.response.out.write(screengrab.imgdata)
                         return
             except:
