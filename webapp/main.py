@@ -55,8 +55,11 @@ class CleanHandler(webapp.RequestHandler):
         return
 
 def main():
-    application = webapp.WSGIApplication([('/cleaner', CleanHandler),(r'/(.*)', MainHandler)],
-                                       debug=False)
+    application = webapp.WSGIApplication(
+        [
+            ('/cleaner', CleanHandler),
+            (r'/(.*)', MainHandler)
+        ], debug=False)
     wsgiref.handlers.CGIHandler().run(application)
 
 
@@ -64,4 +67,4 @@ def randomstring():
     return ''.join(random.sample('abcdefghijklmnopqrstuvwxyz0123456789', 5))
 
 if __name__ == '__main__':
-  main()
+    main()
