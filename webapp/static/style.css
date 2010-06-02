@@ -12,10 +12,10 @@ body{
 }
 #midarea {
   background: url(/static/images/blueshit.png) bottom center no-repeat;
-  min-height:120px;
+  min-height:80px;
   padding-bottom:120px;
 }
-.notice {
+.notice, .notice2 {
   background:#abddf4;
   color:#4444bb;
   text-shadow:1px 1px 1px #fff;
@@ -24,6 +24,10 @@ body{
   border-radius:15px;
   padding:10px 15px;
   width:70%;
-  margin:0px auto;
+  margin:5px auto;
   font-family:Lilly;
+}
+.notice2{
+  background:#ffff99;
+  color:#e5786d;
 }

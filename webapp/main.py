@@ -18,6 +18,7 @@
 import wsgiref.handlers
 from google.appengine.ext import webapp
 from google.appengine.ext import db
+from google.appengine.api import users
 
 from models import Screengrabs
 import helpers
@@ -36,9 +37,10 @@ class MainHandler(webapp.RequestHandler):
                         return
             except:
                 pass
-        
+
         # render banner page
-        helpers.render (self, 'index.html', {})
+        values = { 'login_url': users.create_login_url(self.request.uri) }
+        helpers.render (self, 'index.html', values)
 
     def post(self,foobar):
       #TODO: protect uploads <--> trust b/w clients and servers <--> Oauth,

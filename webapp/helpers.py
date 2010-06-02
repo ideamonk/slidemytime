@@ -3,7 +3,7 @@ import random
 import os
 from google.appengine.ext.webapp import template
 
-T_PATH = os.path.join(os.path.dirname(__file__),'/views')
+T_PATH = os.path.join(os.path.dirname(__file__),'views')
 
 def shortify():
     ''' some estimates on 4 letter shorties
