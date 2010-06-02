@@ -18,6 +18,7 @@
 import wsgiref.handlers
 from google.appengine.ext import webapp
 from google.appengine.ext import db
+
 from models import Screengrabs
 import helpers
 
@@ -35,7 +36,9 @@ class MainHandler(webapp.RequestHandler):
                         return
             except:
                 pass
-        self.response.out.write('Nothing here yet :)')
+        
+        # render banner page
+        helpers.render (self, 'index.html', {})
 
     def post(self,foobar):
       #TODO: protect uploads <--> trust b/w clients and servers <--> Oauth,

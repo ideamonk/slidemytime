@@ -1,5 +1,9 @@
 ''' misc helper code '''
 import random
+import os
+from google.appengine.ext.webapp import template
+
+T_PATH = os.path.join(os.path.dirname(__file__),'/views')
 
 def shortify():
     ''' some estimates on 4 letter shorties
@@ -19,4 +23,8 @@ def shortify():
         Format - i****
     '''
     return 'i' + ''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 4))
+
+def render(req, view, values):
+    view_path = os.path.join(T_PATH, view)
+    req.response.out.write( template.render(view_path,values) )
 
