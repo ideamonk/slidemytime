@@ -17,7 +17,7 @@
 
 import wsgiref.handlers
 from google.appengine.ext import webapp
-from google.appengine.ext import db
+from models import Screengrabs
 import random
 
 class MainHandler(webapp.RequestHandler):
@@ -45,8 +45,8 @@ class MainHandler(webapp.RequestHandler):
         screengrabs.put()
         self.response.out.write(randomname)
 
-
 class CleanHandler(webapp.RequestHandler):
+    # TODO: think of it
     def get(self):
         q = Screengrabs.all()
         results = q.fetch(100)
@@ -58,13 +58,6 @@ def main():
     application = webapp.WSGIApplication([('/cleaner', CleanHandler),(r'/(.*)', MainHandler)],
                                        debug=False)
     wsgiref.handlers.CGIHandler().run(application)
-
-
-class Screengrabs(db.Model):
-   imgdata = db.BlobProperty()
-   imagename = db.StringProperty()
-   date = db.DateTimeProperty(auto_now_add=True)
-
 
 
 def randomstring():
