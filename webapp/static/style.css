@@ -1,2 +1,23 @@
-#wrapper { width:800px; margin:0px auto; }
-
+a, img { border:none; }
+body{
+  font-size:12px;
+}
+#wrapper { 
+  width:800px; 
+  margin:0px auto; 
+  text-align:center;
+}
+#midarea {
+  background: url(/static/images/blueshit.png) bottom center no-repeat;
+  min-height:120px;
+  padding-bottom:120px;
+}
+.notice {
+  background:#c3e8ff;
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  border-radius:5px;
+  padding:10px 5px;
+  width:70%;
+  margin:0px auto;
+}
