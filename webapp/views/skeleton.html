@@ -11,10 +11,12 @@
 </head>
 <body>
   <div id='wrapper'>
+    {% block logo %}
     <div id='upperlogo2'>
       <img src='/static/images/logo_small.png' alt='SlideMyTime' align='left' />
     </div>
-
+    {% endblock %}
+    {% block menu %}
     <ul id='topmenu'>
       <li>
         <a href="#">Overview</a>
@@ -29,7 +31,7 @@
         <a href="{{logout_url}}">Logout</a>
       </li>
     </ul>
-
+    {% endblock %}
     {% block content %}{% endblock %}
 
   </div>

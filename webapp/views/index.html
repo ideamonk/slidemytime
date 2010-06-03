@@ -1,19 +1,15 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
-<head>
-  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="description" content="SlideMyTime">
-		<meta name="author" content="ideamonk">
-		<meta name="keywords" content="Snapshots, history, go back in time, lulz at your past n00bness">
-		<title>SlideMyTime</title>
-		<link rel="stylesheet" href="static/style.css" type="text/css">
-		<link rel="shortcut icon" href="static/favicon.ico">
-</head>
-<body>
-  <div id='wrapper'>
+{% extends 'skeleton.html' %}
+
+{% block logo %}
     <div id='upperlogo'>
       <img src='/static/images/logo_med.jpg' alt='SlideMyTime'/>
     </div>
+{% endblock %}
+
+{% block menu %}
+{% endblock %}
+
+{% block content %}
     <div id='midarea'>
       <div class='notice'>
         This is a SlideMyTime instance. Please <a href="{{login_url}}">log in</a> if you're the owner of
@@ -32,6 +28,4 @@
       {% endif %}
       {% endif %}
     </div>
-  </div>
-</body>
-</html>
+{% endblock %}
