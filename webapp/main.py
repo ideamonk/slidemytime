@@ -117,7 +117,14 @@ class HomeHandler(webapp.RequestHandler):
             values.update( {'total_days':date_diff.days})
             values.update( {'total_hours':date_diff.seconds/3600})
             values.update( {'total_minutes':(date_diff.seconds/60)%60})
-
+            # BEFORE I GET HIGH           ==+
+            #
+            #
+            #
+            #
+            #
+            #
+            ##
 
             values.update( {'date_start':date_start.strftime('%F %H:%M:%S')} )
             values.update( {'date_stop':date_stop.strftime('%F %H:%M:%S')} )
