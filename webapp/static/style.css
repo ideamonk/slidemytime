@@ -36,7 +36,7 @@ body{
   overflow:auto;
   z-index:40;
   position:fixed;
-  margin-top:-30px;
+  margin-top:-25px;
   margin-left:-50px;
 }
 .notice, .notice2 {
@@ -77,4 +77,11 @@ body{
     border:#ccc 1px solid;
     float:right;
     margin:10px 40px 10px 10px;
+    padding:0px 5px 0px 10px;
 }
+#empty_byte_block, #byte_block{
+    background:red;
+    width:1px;
+    display:inline-block;
+}
+#empty_byte_block { background:#ddebc1; }

@@ -4,7 +4,13 @@
   <div id='storage_stat'>
     <div id='total_bytes'>
         Storage :
-        {{total_bytes}} bytes
+        {{total_mbytes}} MB
+        {% for i in total_micro %}
+            <div id='byte_block'>&nbsp;</div>
+        {% endfor %}
+        {% for i in remaining_micro %}
+            <div id='empty_byte_block'>&nbsp;</div>
+        {% endfor %}
     </div>
   </div>
 {% endblock %}
