@@ -39,10 +39,13 @@ class MainHandler(webapp.RequestHandler):
                 pass
 
         # render banner page
+        if users.is_current_user_admin():
+            self.redirect("/home")
+
         user = users.get_current_user()
         values = { 'login_url': users.create_login_url(self.request.uri) }
         values.update( {'is_not_logged_in': user == None} )
-        values.update( {'is_admin': users.is_current_user_admin()} )
+        values.update( {'is_admin':False} )
         if user:
           values.update( {'nick':user.nickname()} )
         helpers.render(self, 'index.html', values)
