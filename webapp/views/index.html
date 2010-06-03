@@ -21,6 +21,16 @@
         <br />
         <a href="#">Discover SlideMyTime</a> if you haven't already.
       </div>
+      {% if not is_not_logged_in %}
+      {% if not is_admin %}
+        <div class='notice'>
+          {{nick}}, you need to be the owner of this GAE instance to be able to
+          access.
+          <br />
+          Learn more about setting up you own <a href="#">here</a>
+        </div>
+      {% endif %}
+      {% endif %}
     </div>
   </div>
 </body>

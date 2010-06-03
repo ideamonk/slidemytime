@@ -39,8 +39,13 @@ class MainHandler(webapp.RequestHandler):
                 pass
 
         # render banner page
+        user = users.get_current_user()
         values = { 'login_url': users.create_login_url(self.request.uri) }
-        helpers.render (self, 'index.html', values)
+        values.update( {'is_not_logged_in': user == None} )
+        values.update( {'is_admin': users.is_current_user_admin()} )
+        if user:
+          values.update( {'nick':user.nickname()} )
+        helpers.render(self, 'index.html', values)
 
     def post(self,foobar):
       #TODO: protect uploads <--> trust b/w clients and servers <--> Oauth,
