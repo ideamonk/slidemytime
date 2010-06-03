@@ -69,7 +69,7 @@ body{
   padding:5px 10px 0px 10px;
 }
 #topmenu li a:hover {
-  border-bottom:1px #86c9ef dashed;
+  color: #4682ca;
 }
 
 #total_bytes{
