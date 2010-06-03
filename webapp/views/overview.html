@@ -17,4 +17,21 @@
         {% endfor %}
     </div>
   </div>
+
+  <div class='vspanner'>
+  &nbsp;
+  </div>
+
+  <div id='over_stats'>
+    <p>
+        This Time Slider has <strong>{{total_snaps}}</strong> snapshots,
+        <br />
+        Timed from <strong>{{date_start}}</strong>
+        to <strong>{{date_stop}}</strong>
+        <br />
+        Summing a total of <strong>{{total_days}}</strong> days,
+        <strong>{{total_hours}}</strong> hours and
+        <strong>{{total_minutes}}</strong> minutes
+    </p>
+  </div>
 {% endblock %}

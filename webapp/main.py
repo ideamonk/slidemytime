@@ -23,6 +23,8 @@ from google.appengine.api import users
 from models import Screengrabs
 import helpers
 
+import datetime
+
 class MainHandler(webapp.RequestHandler):
     def get(self,imagename):
         if imagename!="":
@@ -87,11 +89,38 @@ class HomeHandler(webapp.RequestHandler):
         values.update( {'logout_url':users.create_logout_url("/")} )
 
         if pagename in ['','/', None]:
+            # ---------------------------------------------------------------
+            #    Overview Page
+            # ---------------------------------------------------------------
             values.update( helpers.get_storage_stats() )
 
-            total_micro = range((float(values['total_kbytes']) / 1024**2)*100)
-            values.update ( {'total_micro': total_micro} )
-            values.update ( {'remaining_micro': range(100-len(total_micro))} )
+            # storage stats
+            total_micro = int((float(values['total_kbytes']) / 1024**2)*100)
+            values.update( {'total_micro': range(total_micro)} )
+            values.update( {'remaining_micro': range(100-total_micro)} )
+
+            # misc over stats
+            values.update( {'total_snaps': Screengrabs.all().count()} )
+
+            try:
+                date_start = Screengrabs.all().order('date').fetch(1)[0].date
+            except:
+                date_start = 'an unknown time in the past'
+
+            try:
+                date_stop = Screengrabs.all().order('-date').fetch(1)[0].date
+            except:
+                date_stop = 'an unknown time in the future'
+
+            date_diff = date_stop-date_start
+            #print dir(date_diff)
+            values.update( {'total_days':date_diff.days})
+            values.update( {'total_hours':date_diff.seconds/3600})
+            values.update( {'total_minutes':(date_diff.seconds/60)%60})
+
+
+            values.update( {'date_start':date_start.strftime('%F %H:%M:%S')} )
+            values.update( {'date_stop':date_stop.strftime('%F %H:%M:%S')} )
 
             helpers.render(self, "overview.html",values)
             return

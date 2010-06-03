@@ -84,3 +84,9 @@ body{
     width:1px;
 }
 #empty_byte_block { background:#ddebc1; }
+
+.vspanner { height:60px; }
+#over_stats{
+    padding:0px 40px;
+    font-size:1.6em;
+}
