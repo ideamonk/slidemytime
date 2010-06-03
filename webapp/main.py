@@ -56,11 +56,13 @@ class MainHandler(webapp.RequestHandler):
         imgdata = self.request.get("img")
         screengrabs = Screengrabs()
         screengrabs.imgdata = db.Blob(imgdata)
-        randomname = helpers.shortify() 
+        randomname = helpers.shortify()
         screengrabs.imagename = randomname
         screengrabs.put()
-        self.response.out.write("[ '%s', '%s' ]" % 
+        self.response.out.write("[ '%s', '%s' ]" %
                                          (screengrabs.key(), randomname))
+
+
 
 class CleanHandler(webapp.RequestHandler):
     # TODO: TBD
@@ -71,14 +73,19 @@ class CleanHandler(webapp.RequestHandler):
             result.delete()
         return
 
+
+
 class HomeHandler(webapp.RequestHandler):
-    def get(self):
+    def get(self, pagename=None):
         if not users.is_current_user_admin():
             self.redirect("/")
 
         values={}
         values.update( {'logout_url':users.create_logout_url("/")} )
-        helpers.render(self, "overview.html",values) 
+
+        if pagename in ['','/', None]:
+            helpers.render(self, "overview.html",values)
+            return
 
 
 
@@ -86,7 +93,7 @@ def main():
     application = webapp.WSGIApplication(
         [
             ('/cleaner', CleanHandler),
-            ('/home', HomeHandler),
+            ('/home(.*)', HomeHandler),
             (r'/(.*)', MainHandler)
         ], debug=False)
     wsgiref.handlers.CGIHandler().run(application)
