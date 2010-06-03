@@ -31,7 +31,7 @@ def render(req, view, values):
 
 def get_storage_stats():
     global_stat = stats.GlobalStat.all().get()
-    total_bytes = (global_stat.bytes/1024**2) if global_stat else 0
+    total_bytes = (global_stat.bytes/1024) if global_stat else 0
     return {
-            'total_mbytes':total_bytes,
+            'total_kbytes':total_bytes,
             }

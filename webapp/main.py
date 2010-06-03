@@ -89,7 +89,7 @@ class HomeHandler(webapp.RequestHandler):
         if pagename in ['','/', None]:
             values.update( helpers.get_storage_stats() )
 
-            total_micro = range((float(values['total_mbytes']) / 1024)*100)
+            total_micro = range((float(values['total_kbytes']) / 1024**2)*100)
             values.update ( {'total_micro': total_micro} )
             values.update ( {'remaining_micro': range(100-len(total_micro))} )
 
