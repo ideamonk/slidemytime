@@ -6,10 +6,14 @@
         Storage :
         {{total_mbytes}} MB
         {% for i in total_micro %}
-            <div id='byte_block'>&nbsp;</div>
+            <span id='byte_block'>
+                <img src='/static/images/spacer.gif' />
+            </span>
         {% endfor %}
         {% for i in remaining_micro %}
-            <div id='empty_byte_block'>&nbsp;</div>
+            <span id='empty_byte_block'>
+                <img src='/static/images/spacer.gif' />
+            </span>
         {% endfor %}
     </div>
   </div>

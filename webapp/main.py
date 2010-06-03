@@ -51,8 +51,11 @@ class MainHandler(webapp.RequestHandler):
         helpers.render(self, 'index.html', values)
 
     def post(self,foobar):
-      #TODO: protect uploads <--> trust b/w clients and servers <--> Oauth,
-      # secret, etc
+        #TODO: protect uploads <--> trust b/w clients and servers <--> Oauth,
+        # secret, etc
+        # Hobbes` oneliner
+        # echo "http://slidemytime.appspot.com/"` curl -sF "img=@foo.png;type=image/png" http://slidemytime.appspot.com/posthere`
+
         imgdata = self.request.get("img")
         screengrabs = Screengrabs()
         screengrabs.imgdata = db.Blob(imgdata)
