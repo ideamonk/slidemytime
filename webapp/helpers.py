@@ -2,6 +2,7 @@
 import random
 import os
 from google.appengine.ext.webapp import template
+from google.appengine.ext.db import stats
 
 T_PATH = os.path.join(os.path.dirname(__file__),'views')
 
@@ -19,7 +20,7 @@ def shortify():
         >>> ((62**4) * 2) / 60 / 24 / 365    # how many year?
         56                                   # 56 years good enough ?!
         # want more? take snap every 5 minutes = 140 years
-        
+
         Format - i****
     '''
     return 'i' + ''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 4))
@@ -28,3 +29,9 @@ def render(req, view, values):
     view_path = os.path.join(T_PATH, view)
     req.response.out.write( template.render(view_path,values) )
 
+def get_storage_stats():
+    global_stat = stats.GlobalStat.all().get()
+    total_bytes = global_stat.bytes if global_stat else -1
+    return {
+            'total_bytes':total_bytes,
+            }

@@ -84,6 +84,7 @@ class HomeHandler(webapp.RequestHandler):
         values.update( {'logout_url':users.create_logout_url("/")} )
 
         if pagename in ['','/', None]:
+            values.update( helpers.get_storage_stats() )
             helpers.render(self, "overview.html",values)
             return
 

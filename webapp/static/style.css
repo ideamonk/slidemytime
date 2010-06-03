@@ -1,10 +1,10 @@
-@font-face { font-family: Lilly ; src: url('/static/fonts/Lilly__.ttf'); } 
+@font-face { font-family: Lilly ; src: url('/static/fonts/Lilly__.ttf'); }
 
-a, img { 
-  border:none; 
+a, img {
+  border:none;
 }
-a:visited { 
-  color:blue; 
+a:visited {
+  color:blue;
 }
 body{
   font-size:12px;
@@ -12,15 +12,16 @@ body{
   background: #fff;/*#e6f5ff;*/
   padding:0px; margin-top:30px;
 }
-#wrapper { 
-  width:820px; 
-  margin:0px auto; 
+#wrapper {
+  width:820px;
+  margin:0px auto;
   background:#ffffff;
   -moz-box-shadow:0px 0px 15px #aaa;
   -webkit-box-shadow:0px 0px 15px #aaa;
   border-radius:20px;
   -moz-border-radius:20px;
   -webskit-border-radius:20px;
+  overflow:auto;
 }
 #midarea {
   background: url(/static/images/blueshit.png) bottom center no-repeat;
@@ -30,13 +31,13 @@ body{
 #upperlogo{
   text-align:center;
 }
-#upperlogo2{ 
-  clear:both; 
-  overflow:auto; 
-  z-index:40; 
+#upperlogo2{
+  clear:both;
+  overflow:auto;
+  z-index:40;
   position:fixed;
-  margin-top:-30px; 
-  margin-left:-50px; 
+  margin-top:-30px;
+  margin-left:-50px;
 }
 .notice, .notice2 {
   /*background:#abddf4;*/
@@ -69,4 +70,11 @@ body{
 }
 #topmenu li a:hover {
   border-bottom:1px #86c9ef dashed;
+}
+
+#total_bytes{
+    background:#efefef;
+    border:#ccc 1px solid;
+    float:right;
+    margin:10px 40px 10px 10px;
 }
