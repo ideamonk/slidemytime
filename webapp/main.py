@@ -71,10 +71,22 @@ class CleanHandler(webapp.RequestHandler):
             result.delete()
         return
 
+class HomeHandler(webapp.RequestHandler):
+    def get(self):
+        if not users.is_current_user_admin():
+            self.redirect("/")
+
+        values={}
+        values.update( {'logout_url':users.create_logout_url("/")} )
+        helpers.render(self, "overview.html",values) 
+
+
+
 def main():
     application = webapp.WSGIApplication(
         [
             ('/cleaner', CleanHandler),
+            ('/home', HomeHandler),
             (r'/(.*)', MainHandler)
         ], debug=False)
     wsgiref.handlers.CGIHandler().run(application)

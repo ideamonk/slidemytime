@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="description" content="SlideMyTime">
+        <meta name="author" content="ideamonk">
+        <meta name="keywords" content="Snapshots, history, go back in time, lulz at your past n00bness">
+        <title>SlideMyTime</title>
+        <link rel="stylesheet" href="static/style.css" type="text/css">
+        <link rel="shortcut icon" href="static/favicon.ico">
+</head>
+<body>
+  <div id='wrapper'>
+    <div id='upperlogo2'>
+      <img src='/static/images/logo_small.png' alt='SlideMyTime' align='left' />
+    </div>
+
+    <ul id='topmenu'>
+      <li>
+        <a href="#">Overview</a>
+      </li>
+      <li>
+        <a href="#">Machines</a>
+      </li>
+      <li>
+        <a href="#">History</a>
+      </li>
+      <li>
+        <a href="{{logout_url}}">Logout</a>
+      </li>
+    </ul>
+
+    {% block content %}{% endblock %}
+
+  </div>
+</body>
+</html>

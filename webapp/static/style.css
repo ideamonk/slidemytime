@@ -1,7 +1,11 @@
 @font-face { font-family: Lilly ; src: url('/static/fonts/Lilly__.ttf'); } 
 
-a, img { border:none; }
-a:visited { color:blue; }
+a, img { 
+  border:none; 
+}
+a:visited { 
+  color:blue; 
+}
 body{
   font-size:12px;
   font-family:helvetica, georgia, arial, verdana, serif;
@@ -11,7 +15,6 @@ body{
 #wrapper { 
   width:820px; 
   margin:0px auto; 
-  text-align:center;
   background:#ffffff;
   -moz-box-shadow:0px 0px 15px #aaa;
   -webkit-box-shadow:0px 0px 15px #aaa;
@@ -24,6 +27,17 @@ body{
   min-height:80px;
   padding-bottom:120px;
 }
+#upperlogo{
+  text-align:center;
+}
+#upperlogo2{ 
+  clear:both; 
+  overflow:auto; 
+  z-index:40; 
+  position:fixed;
+  margin-top:-30px; 
+  margin-left:-50px; 
+}
 .notice, .notice2 {
   /*background:#abddf4;*/
   color:#4444bb;
@@ -35,4 +49,24 @@ body{
   width:70%;
   margin:5px auto;
   font-family:Lilly;
+}
+#topmenu li{
+  list-style:none;
+  margin: 5px 0px;
+  display:inline-block;
+}
+#topmenu{
+  text-align:right;
+  margin-right:30px;
+}
+#topmenu li a{
+  display:inline-block;
+  color:#505050;
+  text-decoration:none;
+  font-family:Lilly;
+  font-size:1.1em;
+  padding:5px 10px 0px 10px;
+}
+#topmenu li a:hover {
+  border-bottom:1px #86c9ef dashed;
 }
