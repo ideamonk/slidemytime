@@ -99,7 +99,7 @@ class HomeHandler(webapp.RequestHandler):
             values.update( {'total_size':slide_stat.total_size} )
 
             # storage stats
-            total_micro = (float(values['total_size']) / 1024**2)*100
+            total_micro = int((float(values['total_size']) / 1024**2)*100)
             values.update( {'total_micro': range(total_micro)} )
             values.update( {'remaining_micro': range(100-total_micro)} )
 
@@ -129,6 +129,36 @@ class HomeHandler(webapp.RequestHandler):
 
             helpers.render(self, "overview.html",values)
             return
+
+        if pagename in ['/machines','/machines/']:
+            # ---------------------------------------------------------------
+            #    Machines Page
+            # ---------------------------------------------------------------
+            total_machines = Machines.all().count()
+            values.update ( {'total_machines': total_machines} )
+
+            if total_machines>0:
+                values.update({'machines_start':Machines.all().order('created').fetch(1)[0].created})
+                values.update( {'machines':Machines.all().fetch(1000)} )
+            else:
+                values.update({'machines_start':'a time unknown'})
+
+            helpers.render(self, "machines.html",values)
+            return
+
+    def post(self, pagename=None):
+        if not users.is_current_user_admin():
+            self.redirect("/")
+
+        if pagename == '/machines/add':
+            # ---------------------------------------------------------------
+            #    Add Machines
+            # ---------------------------------------------------------------
+            name = self.request.get('name')
+            machine = Machines(name=name, enabled=True, passphrase=helpers.gimme_garbage(12))
+            machine.put()
+
+            self.redirect('/home/machines')
 
 
 

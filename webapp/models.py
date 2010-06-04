@@ -14,3 +14,4 @@ class Machines(db.Model):
     name = db.StringProperty()
     enabled = db.BooleanProperty()
     passphrase = db.StringProperty()
+    created = db.DateTimeProperty(auto_now_add=True)
