@@ -94,33 +94,38 @@ class HomeHandler(webapp.RequestHandler):
             # ---------------------------------------------------------------
             #    Overview Page
             # ---------------------------------------------------------------
-            values.update( helpers.get_storage_stats() )
+            slide_stat = SlideStats.all().fetch(1)[0]
+
+            values.update( {'total_size':slide_stat.total_size} )
 
             # storage stats
-            total_micro = int((float(values['total_kbytes']) / 1024**2)*100)
+            total_micro = (float(values['total_size']) / 1024**2)*100
             values.update( {'total_micro': range(total_micro)} )
             values.update( {'remaining_micro': range(100-total_micro)} )
 
             # misc over stats
-            values.update( {'total_snaps': Screengrabs.all().count()} )
+            values.update( {'total_snaps': slide_stat.total_snaps} )
 
             try:
                 date_start = Screengrabs.all().order('date').fetch(1)[0].date
             except:
-                date_start = 'an unknown time in the past'
+                pass
 
             try:
                 date_stop = Screengrabs.all().order('-date').fetch(1)[0].date
             except:
-                date_stop = 'an unknown time in the future'
+                pass
 
-            date_diff = date_stop-date_start
-            values.update( {'total_days':date_diff.days})
-            values.update( {'total_hours':date_diff.seconds/3600})
-            values.update( {'total_minutes':(date_diff.seconds/60)%60})
-
-            values.update( {'date_start':date_start.strftime('%F %H:%M:%S')} )
-            values.update( {'date_stop':date_stop.strftime('%F %H:%M:%S')} )
+            if date_start and date_stop:
+                date_diff = date_stop-date_start
+                values.update( {'total_days':date_diff.days})
+                values.update( {'total_hours':date_diff.seconds/3600})
+                values.update( {'total_minutes':(date_diff.seconds/60)%60})
+                values.update( {'date_start':date_start.strftime('%F %H:%M:%S')} )
+                values.update( {'date_stop':date_stop.strftime('%F %H:%M:%S')} )
+            else:
+                values.update( {'date_stop':'a time unknown'} )
+                values.update( {'date_start':'a time never known'} )
 
             helpers.render(self, "overview.html",values)
             return
@@ -128,6 +133,13 @@ class HomeHandler(webapp.RequestHandler):
 
 
 def main():
+    # First run check
+    if SlideStats.all().count() == 0:
+        s = SlideStats()
+        s.total_snaps = 0
+        s.total_size = 0
+        s.put()
+
     application = webapp.WSGIApplication(
         [
             ('/cleaner', CleanHandler),

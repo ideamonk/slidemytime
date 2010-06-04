@@ -6,6 +6,10 @@ from google.appengine.ext.db import stats
 
 T_PATH = os.path.join(os.path.dirname(__file__),'views')
 
+def render(req, view, values):
+    view_path = os.path.join(T_PATH, view)
+    req.response.out.write( template.render(view_path,values) )
+
 def gimme_garbage(size):
     return ''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', size))
 
@@ -27,14 +31,3 @@ def shortify():
         Format - i****
     '''
     return 'i' + gimme_garbage(4)
-
-def render(req, view, values):
-    view_path = os.path.join(T_PATH, view)
-    req.response.out.write( template.render(view_path,values) )
-
-def get_storage_stats():
-    global_stat = stats.GlobalStat.all().get()
-    total_bytes = (global_stat.bytes/1024) if global_stat else 0
-    return {
-            'total_kbytes':total_bytes,
-            }

@@ -7,8 +7,8 @@ class Screengrabs(db.Model):
    size = db.IntegerProperty()
 
 class SlideStats(db.Model):
-    totalsnaps = db.IntegerProperty()
-    totalsize = db.IntegerProperty()
+    total_snaps = db.IntegerProperty()
+    total_size = db.IntegerProperty()
 
 class Machines(db.Model):
     name = db.StringProperty()
