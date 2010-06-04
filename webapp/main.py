@@ -146,13 +146,43 @@ class HomeHandler(webapp.RequestHandler):
             helpers.render(self, "machines.html",values)
             return
 
+        if pagename in ['/machines/delete/','/machines/delete']:
+            # ---------------------------------------------------------------
+            #    Machines_delete
+            # ---------------------------------------------------------------
+            _key=self.request.get('key')
+            machine = db.get(_key)
+            machine.delete()
+            self.redirect("/home/machines")
+
+        if pagename in ['/machines/disable/','/machines/disable']:
+            # ---------------------------------------------------------------
+            #    Machines_disable
+            # ---------------------------------------------------------------
+            _key=self.request.get('key')
+            machine = db.get(_key)
+            machine.enabled=False
+            db.put(machine)
+            self.redirect("/home/machines")
+
+        if pagename in ['/machines/enable/','/machines/enable']:
+            # ---------------------------------------------------------------
+            #    Machines_enable
+            # ---------------------------------------------------------------
+            _key=self.request.get('key')
+            machine = db.get(_key)
+            machine.enabled=True
+            machine.put()
+            self.redirect("/home/machines")
+
+
     def post(self, pagename=None):
         if not users.is_current_user_admin():
             self.redirect("/")
 
         if pagename == '/machines/add':
             # ---------------------------------------------------------------
-            #    Add Machines
+            #    Machines_add
             # ---------------------------------------------------------------
             name = self.request.get('name')
             machine = Machines(name=name, enabled=True, passphrase=helpers.gimme_garbage(12))
