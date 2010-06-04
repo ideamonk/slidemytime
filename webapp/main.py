@@ -20,7 +20,7 @@ from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import users
 
-from models import Screengrabs
+from models import Screengrabs, SlideStats, Machines
 import helpers
 
 import datetime
@@ -59,6 +59,8 @@ class MainHandler(webapp.RequestHandler):
         # echo "http://slidemytime.appspot.com/"` curl -sF "img=@foo.png;type=image/png" http://slidemytime.appspot.com/posthere`
 
         imgdata = self.request.get("img")
+        self.response.out.write( len(imgdata) )
+        return
         screengrabs = Screengrabs()
         screengrabs.imgdata = db.Blob(imgdata)
         randomname = helpers.shortify()
@@ -113,18 +115,9 @@ class HomeHandler(webapp.RequestHandler):
                 date_stop = 'an unknown time in the future'
 
             date_diff = date_stop-date_start
-            #print dir(date_diff)
             values.update( {'total_days':date_diff.days})
             values.update( {'total_hours':date_diff.seconds/3600})
             values.update( {'total_minutes':(date_diff.seconds/60)%60})
-            # BEFORE I GET HIGH           ==+        |
-            #      -    ___________+                 |
-            #     -@@@@/                   =-=       |
-            #    -@@@@@@-                   |        |
-            #   -@@@@@@@@------------------/         |
-            #    -@@@@@-                             |
-            #      -----                             |
-            ##----------------------------------------
 
             values.update( {'date_start':date_start.strftime('%F %H:%M:%S')} )
             values.update( {'date_stop':date_stop.strftime('%F %H:%M:%S')} )

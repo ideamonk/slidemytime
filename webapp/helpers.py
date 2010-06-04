@@ -6,6 +6,9 @@ from google.appengine.ext.db import stats
 
 T_PATH = os.path.join(os.path.dirname(__file__),'views')
 
+def gimme_garbage(size):
+    return ''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', size))
+
 def shortify():
     ''' some estimates on 4 letter shorties
         -----------------------------------
@@ -23,7 +26,7 @@ def shortify():
 
         Format - i****
     '''
-    return 'i' + ''.join(random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 4))
+    return 'i' + gimme_garbage(4)
 
 def render(req, view, values):
     view_path = os.path.join(T_PATH, view)
