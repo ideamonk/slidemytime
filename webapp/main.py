@@ -96,10 +96,11 @@ class CleanHandler(webapp.RequestHandler):
             self.redirect("/")
 
         q = Screengrabs.all()
-        results = q.fetch(1000)
+        results = q.fetch(400)
         for result in results:
+            self.response.out.write ("murdered %s" % result.imagename)
             result.delete()
-        return
+
 
 
 
