@@ -224,7 +224,7 @@ class HomeHandler(webapp.RequestHandler):
             if slide_count<1:
                 self.redirect ('/home/history?count=100')
 
-            screengrabs = Screengrabs.all().fetch(slide_count)
+            screengrabs = Screengrabs.all().order('-date').fetch(slide_count)
             if len(screengrabs) < slide_count:
                 slide_count = len(screengrabs)
 
