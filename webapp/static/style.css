@@ -96,3 +96,8 @@ body{
 #machine_list p {text-align:center; }
 #machine_list .m_head span {  border-right:1px solid #aaa; }
 #machine_list p span { display:inline-block; padding:2px 10px; width:15%; }
+
+#thumb_list{
+    margin:30px 5px;
+}
+#thumb_list img { margin:4px; }

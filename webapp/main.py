@@ -165,18 +165,18 @@ class HomeHandler(webapp.RequestHandler):
             return
 
         if pagename in ['/machines/delete/','/machines/delete']:
-            # ---------------------------------------------------------------
+            #
             #    Machines_delete
-            # ---------------------------------------------------------------
+            #
             _key=self.request.get('key')
             machine = db.get(_key)
             machine.delete()
             self.redirect("/home/machines")
 
         if pagename in ['/machines/disable/','/machines/disable']:
-            # ---------------------------------------------------------------
+            #
             #    Machines_disable
-            # ---------------------------------------------------------------
+            #
             _key=self.request.get('key')
             machine = db.get(_key)
             machine.enabled=False
@@ -184,15 +184,37 @@ class HomeHandler(webapp.RequestHandler):
             self.redirect("/home/machines")
 
         if pagename in ['/machines/enable/','/machines/enable']:
-            # ---------------------------------------------------------------
+            #
             #    Machines_enable
-            # ---------------------------------------------------------------
+            #
             _key=self.request.get('key')
             machine = db.get(_key)
             machine.enabled=True
             machine.put()
             self.redirect("/home/machines")
 
+        if pagename in ['/history','/history/']:
+            # ---------------------------------------------------------------
+            #    History Page
+            # ---------------------------------------------------------------
+            slide_count=100
+            try:
+                slide_count = int(self.request.get('count'))
+            except ValueError:
+                self.redirect ('/home/history?count=100')
+
+            if slide_count<1:
+                self.redirect ('/home/history?count=100')
+
+            screengrabs = Screengrabs.all().fetch(slide_count)
+            if len(screengrabs) < slide_count:
+                slide_count = len(screengrabs)
+
+            values.update ( {'screengrabs':screengrabs} )
+            values.update ( {'slide_count':slide_count} )
+
+            helpers.render(self, "history.html",values)
+            return
 
     def post(self, pagename=None):
         if not users.is_current_user_admin():
