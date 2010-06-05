@@ -92,6 +92,9 @@ class MainHandler(webapp.RequestHandler):
 class CleanHandler(webapp.RequestHandler):
     # TODO: TBD
     def get(self):
+        if not users.is_current_user_admin():
+            self.redirect("/")
+
         q = Screengrabs.all()
         results = q.fetch(1000)
         for result in results:
