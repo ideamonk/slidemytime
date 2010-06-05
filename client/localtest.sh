@@ -1,7 +1,7 @@
 import -window root -quality 50 foo.jpg
 convert foo.jpg -quality 50  -thumbnail '160x100' _foo.jpg
 
-password="R41yCXYTtpvf" # passphrase on server
+password="x5VpJWYAUte2" # passphrase on server
 delay=300 # 5 Minutes
 server="http://127.0.0.1:8080/posthere"
 

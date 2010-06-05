@@ -70,8 +70,8 @@ class MainHandler(webapp.RequestHandler):
         imgdata = self.request.get("img")
         thumbdata = self.request.get("thumb")
         passphrase = self.request.get("passphrase")
-
         machines = Machines.all().filter("passphrase =",passphrase).fetch(1)
+
         for machine in machines:
             if machine.enabled:
                 screengrabs = Screengrabs()
@@ -100,7 +100,11 @@ class CleanHandler(webapp.RequestHandler):
         q = Screengrabs.all()
         results = q.fetch(50)
         for result in results:
-            self.response.out.write ("murdered %s" % result.imagename)
+            #self.response.out.write ("murdered %s" % result.imagename)
+            slide_stat = SlideStats.all().fetch(1)[0]
+            slide_stat.total_snaps -= 1
+            slide_stat.total_size -= result.size/1024
+            slide_stat.put()
             result.delete()
 
 class ClinicAllClear(webapp.RequestHandler):
