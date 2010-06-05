@@ -71,20 +71,20 @@ class MainHandler(webapp.RequestHandler):
 
         machines = Machines.all().filter("passphrase =",passphrase).fetch(1)
         for machine in machines:
-            screengrabs = Screengrabs()
-            screengrabs.imgdata = db.Blob(str(imgdata))
-            screengrabs.thumbdata = db.Blob(thumbdata)
-            screengrabs.machine = str(machine.key())
-            randomname = helpers.shortify()
-            screengrabs.imagename = randomname
-            screengrabs.size = len(imgdata) + len(thumbdata)
-            screengrabs.put()
-            slide_stat = SlideStats.all().fetch(1)[0]
-            slide_stat.total_snaps += 1
-            slide_stat.total_size += screengrabs.size/1024
-            slide_stat.put()
-
-            self.response.out.write("[ '%s', '%s' ]" %
+            if machine.enabled:
+                screengrabs = Screengrabs()
+                screengrabs.imgdata = db.Blob(str(imgdata))
+                screengrabs.thumbdata = db.Blob(thumbdata)
+                screengrabs.machine = str(machine.key())
+                randomname = helpers.shortify()
+                screengrabs.imagename = randomname
+                screengrabs.size = len(imgdata) + len(thumbdata)
+                screengrabs.put()
+                slide_stat = SlideStats.all().fetch(1)[0]
+                slide_stat.total_snaps += 1
+                slide_stat.total_size += screengrabs.size/1024
+                slide_stat.put()
+                self.response.out.write("[ '%s', '%s' ]" %
                                     (screengrabs.key(), randomname))
 
 
