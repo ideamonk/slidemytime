@@ -109,7 +109,7 @@ class ClinicAllClear(webapp.RequestHandler):
             self.redirect("/")
 
         for i in xrange(100):
-            taskqueue.add(url='/cleaner', params={})
+            taskqueue.add(url='/cleaner', params={}, method="GET")
         self.response.out.write ("Queued 100 jobs to clean 1000 images")
 
 
