@@ -28,17 +28,23 @@ import datetime
 class MainHandler(webapp.RequestHandler):
     def get(self,imagename):
         if imagename!="":
-            try:
-                q = Screengrabs.all()
-                q.filter("imagename =",imagename)
-                screengrabs = q.fetch(1)
-                for screengrab in screengrabs:
-                    if screengrab.imgdata:
-                        self.response.headers['Content-Type'] = "image/jpeg"
+            q = Screengrabs.all()
+            if len(imagename) == 6:
+                q.filter("imagename =",imagename[1:])
+            else:
+                q.filter("imagename =", imagename)
+
+            screengrabs = q.fetch(1)
+            for screengrab in screengrabs:
+                if screengrab.imgdata:
+                    self.response.headers['Content-Type'] = "image/jpeg"
+                    if len(imagename)==6:
+                        self.response.out.write(screengrab.thumbdata)
+                    else:
                         self.response.out.write(screengrab.imgdata)
-                        return
-            except:
-                pass
+                    return
+            #except:
+            #    pass
 
         # render banner page
         if users.is_current_user_admin():
@@ -58,16 +64,28 @@ class MainHandler(webapp.RequestHandler):
         # Hobbes` oneliner
         # echo "http://slidemytime.appspot.com/"` curl -sF "img=@foo.png;type=image/png" http://slidemytime.appspot.com/posthere`
 
+
         imgdata = self.request.get("img")
-        self.response.out.write( len(imgdata) )
-        return
-        screengrabs = Screengrabs()
-        screengrabs.imgdata = db.Blob(imgdata)
-        randomname = helpers.shortify()
-        screengrabs.imagename = randomname
-        screengrabs.put()
-        self.response.out.write("[ '%s', '%s' ]" %
-                                         (screengrabs.key(), randomname))
+        thumbdata = self.request.get("thumb")
+        passphrase = self.request.get("passphrase")
+
+        machines = Machines.all().filter("passphrase =",passphrase).fetch(1)
+        for machine in machines:
+            screengrabs = Screengrabs()
+            screengrabs.imgdata = db.Blob(str(imgdata))
+            screengrabs.thumbdata = db.Blob(thumbdata)
+            screengrabs.machine = str(machine.key())
+            randomname = helpers.shortify()
+            screengrabs.imagename = randomname
+            screengrabs.size = len(imgdata) + len(thumbdata)
+            screengrabs.put()
+            slide_stat = SlideStats.all().fetch(1)[0]
+            slide_stat.total_snaps += 1
+            slide_stat.total_size += screengrabs.size/1024
+            slide_stat.put()
+
+            self.response.out.write("[ '%s', '%s' ]" %
+                                    (screengrabs.key(), randomname))
 
 
 
@@ -116,14 +134,14 @@ class HomeHandler(webapp.RequestHandler):
             except:
                 pass
 
-            if date_start and date_stop:
+            try:
                 date_diff = date_stop-date_start
                 values.update( {'total_days':date_diff.days})
                 values.update( {'total_hours':date_diff.seconds/3600})
                 values.update( {'total_minutes':(date_diff.seconds/60)%60})
                 values.update( {'date_start':date_start.strftime('%F %H:%M:%S')} )
                 values.update( {'date_stop':date_stop.strftime('%F %H:%M:%S')} )
-            else:
+            except:
                 values.update( {'date_stop':'a time unknown'} )
                 values.update( {'date_start':'a time never known'} )
 
@@ -203,7 +221,7 @@ def main():
     application = webapp.WSGIApplication(
         [
             ('/cleaner', CleanHandler),
-            ('/home(.*)', HomeHandler),
+            (r'/home(.*)', HomeHandler),
             (r'/(.*)', MainHandler)
         ], debug=False)
     wsgiref.handlers.CGIHandler().run(application)

@@ -1,0 +1,47 @@
+{% extends 'skeleton.html' %}
+
+{% block content %}
+  <div id='storage_stat'>
+    <div id='total_bytes'>
+        Total {{total_machines}} machines running since {{machines_start}}
+    </div>
+  </div>
+
+  <div class='vspanner'>
+  &nbsp;
+  </div>
+
+  <div id='machine_list'>
+    <p class='m_head'>
+        <span> <strong>Name</strong> </span>
+        <span> <strong>Passphrase</strong> </span>
+        <span> <strong>Created</strong> </span>
+        <span style='border-right:none;'> <strong>Action</strong> </span>
+    </p>
+    {% for machine in machines %}
+    <p>
+        <span> {{machine.name}} </span>
+        <span> {{machine.passphrase}} </span>
+        <span> {{machine.created}} </span>
+        <span style='border-right:none;'>
+            <a href="/home/machines/delete?key={{machine.key}}">delete</a> |
+            {%if machine.enabled %}
+            <a href="/home/machines/disable?key={{machine.key}}">disable</a>
+            {% else %}
+            <a href="/home/machines/enable?key={{machine.key}}">enable</a>
+            {% endif %}
+
+        </span>
+    </p>
+    {% endfor %}
+    <form action="/home/machines/add" method="post">
+    <p>
+        <span style='border-right:none;'> &nbsp; </span>
+        <span style="border-right:none;text-align:right;"> Name: </span>
+        <span style="border-right:none;text-align:left;"> <input name='name' /> </span>
+        <span style='border-right:none;text-align:left;'> <input style='width:40px;' type='submit' value='+' /> </span>
+    </p>
+    </form>
+  </div>
+
+{% endblock %}
