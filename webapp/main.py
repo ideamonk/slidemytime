@@ -93,7 +93,7 @@ class CleanHandler(webapp.RequestHandler):
     # TODO: TBD
     def get(self):
         q = Screengrabs.all()
-        results = q.fetch(100)
+        results = q.fetch(1000)
         for result in results:
             result.delete()
         return

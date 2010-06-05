@@ -1,0 +1,22 @@
+{% extends 'skeleton.html' %}
+
+{% block content %}
+  <div id='storage_stat'>
+    <div id='total_bytes'>
+        Showing last {{slide_count}} snapshots from all machines &nbsp;
+    </div>
+  </div>
+
+  <div class='vspanner'>
+  &nbsp;
+  </div>
+
+  <div id='thumb_list'>
+    {% for screengrab in screengrabs %}
+    <a href="/{{screengrab.imagename}}">
+        <img src="/t{{screengrab.imagename}}" />
+    </a>
+    {% endfor %}
+  </div>
+
+{% endblock %}
