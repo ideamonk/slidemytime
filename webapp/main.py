@@ -19,6 +19,8 @@ import wsgiref.handlers
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.api import users
+from google.appengine.api.labs import taskqueue
+
 
 from models import Screengrabs, SlideStats, Machines
 import helpers
@@ -96,11 +98,19 @@ class CleanHandler(webapp.RequestHandler):
             self.redirect("/")
 
         q = Screengrabs.all()
-        results = q.fetch(200)
+        results = q.fetch(50)
         for result in results:
             self.response.out.write ("murdered %s" % result.imagename)
             result.delete()
 
+class ClinicAllClear(webapp.RequestHandler):
+    def get(self):
+        if not users.is_current_user_admin():
+            self.redirect("/")
+
+        for i in xrange(100):
+            taskqueue.add(url='/cleaner', params={})
+        self.response.out.write ("Queued 100 jobs to clean 1000 images")
 
 
 
@@ -247,6 +257,7 @@ def main():
     application = webapp.WSGIApplication(
         [
             ('/cleaner', CleanHandler),
+            ('/cleanerall', ClinicAllClear),
             (r'/home(.*)', HomeHandler),
             (r'/(.*)', MainHandler)
         ], debug=False)
